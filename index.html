@@ -501,7 +501,7 @@
     <div class="home-page" id="homePage">
         <div class="video-background">
             <video autoplay loop muted playsinline id="backgroundVideo">
-                <source src="Donna.mp4.mp4" type="video/mp4">
+                <source src="YOUR_VIDEO_FILENAME.mp4" type="video/mp4">
                 </video>
         </div>
         
@@ -879,15 +879,13 @@
             }
         });
 
-        // Set video playback rate
-        window.addEventListener('load', () => {
-            const videoElement = document.getElementById('backgroundVideo');
-            if (videoElement) {
-                // Set playback rate to 1.0
-                // You can adjust this value: 1.0 is normal, <1.0 is slower, >1.0 is faster
-                videoElement.playbackRate = 0.7;
-            }
-        });
+        // Removed the playbackRate adjustment to revert to normal speed
+        // window.addEventListener('load', () => {
+        //     const videoElement = document.getElementById('backgroundVideo');
+        //     if (videoElement) {
+        //         videoElement.playbackRate = 0.7;
+        //     }
+        // });
     </script>
 </body>
 </html>
