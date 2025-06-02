@@ -107,7 +107,7 @@
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 0.8s ease, transform 0.8s ease;
-            padding-bottom: 80px; /* Space for Instagram icon */
+            padding-bottom: 200px; /* Increased space for social icons */
         }
 
         .portfolio-page.fade-in {
@@ -276,7 +276,7 @@
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 0.8s ease, transform 0.8s ease;
-            padding-bottom: 80px; /* Space for Instagram icon */
+            padding-bottom: 200px; /* Increased space for social icons */
         }
 
         .category-page.fade-in {
@@ -353,7 +353,7 @@
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 0.8s ease, transform 0.8s ease;
-            padding-bottom: 80px; /* Space for Instagram icon */
+            padding-bottom: 200px; /* Increased space for social icons */
             position: relative; /* Needed for back button positioning */
         }
 
@@ -378,7 +378,7 @@
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 0.8s ease, transform 0.8s ease;
-            padding-bottom: 80px; /* Space for Instagram icon */
+            padding-bottom: 200px; /* Increased space for social icons */
         }
 
         .about-page.fade-in {
@@ -393,8 +393,9 @@
         }
 
         .about-content {
+            /* Changed to single column as image is removed */
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr; /* Now only one column for text */
             gap: 4rem;
             align-items: center;
         }
@@ -410,111 +411,10 @@
             margin-bottom: 1.5rem;
         }
 
-        .about-image {
-            aspect-ratio: 4/5;
-            background: #1a1a1a;
-            position: relative;
-            overflow: hidden;
-        }
+        /* Removed .about-image style as the div is removed */
 
-        /* Contact Page Styles */
-        .contact-page {
-            display: none;
-            min-height: 100vh;
-            background: #0a0a0a;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-            padding-bottom: 80px; /* Space for Instagram icon */
-        }
-
-        .contact-page.fade-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .contact-section {
-            padding: 12rem 4rem 8rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #cccccc;
-            letter-spacing: 1px;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #333333;
-            color: #ffffff;
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #666666;
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .form-group textarea {
-            height: 120px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: transparent;
-            border: 1px solid #444444;
-            color: #ffffff;
-            cursor: pointer;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            border-color: #ffffff;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Page transition overlay */
-        .transition-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        .transition-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        /* Instagram Icon Styles */
-        .instagram-container {
+        /* Instagram & Mailto Icon Styles */
+        .social-icons-container { /* Renamed from instagram-container */
             position: absolute;
             bottom: 20px; /* Adjust as needed */
             left: 50%;
@@ -522,9 +422,12 @@
             z-index: 50; /* Ensure it's above other content but below overlay */
             text-align: center;
             width: 100%; /* To allow centering with text-align */
+            display: flex; /* Use flexbox to align icons */
+            justify-content: center; /* Center icons horizontally */
+            gap: 15px; /* Space between icons */
         }
 
-        .instagram-icon-link {
+        .social-icon-link { /* Renamed from instagram-icon-link */
             display: inline-block; /* Allows centering of the icon itself */
             color: #ffffff; /* White color for the icon */
             font-size: 24px; /* Small size for the icon */
@@ -532,7 +435,7 @@
             transition: none; /* No transition/hover effect */
         }
 
-        .instagram-icon-link:hover {
+        .social-icon-link:hover {
             color: #ffffff; /* Ensure no color change on hover */
         }
 
@@ -564,7 +467,7 @@
             }
 
             .about-content {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Now only one column for text */
                 gap: 2rem;
             }
 
@@ -574,9 +477,15 @@
             }
 
             .category-header,
-            .about-section,
-            .contact-section {
+            .about-section { /* Removed contact-section */
                 padding: 8rem 2rem 4rem;
+            }
+            /* Added padding-bottom for pages on mobile */
+            .portfolio-page,
+            .category-page,
+            .project-detail-page,
+            .about-page {
+                padding-bottom: 120px; /* Adjusted for mobile */
             }
         }
 
@@ -591,17 +500,17 @@
 
     <div class="home-page" id="homePage">
         <div class="video-background">
-    <video autoplay loop muted playsinline>
-        <source src="Donna.mp4.mp4" type="video/mp4">
-        </video>
-</div>
+            <video autoplay loop muted playsinline id="backgroundVideo">
+                <source src="YOUR_VIDEO_FILENAME.mp4" type="video/mp4">
+                </video>
+        </div>
         
         <div class="home-content">
             <div class="name-title" onclick="showPortfolio()">
                 <div class="name">Alessandro Iannella</div>
             </div>
         </div>
-        </div>
+    </div>
 
     <div class="portfolio-page" id="portfolioPage">
         <div class="grain-overlay"></div>
@@ -614,8 +523,7 @@
                 </div>
                 <ul class="nav-links">
                     <li><button onclick="showAbout()">ABOUT</button></li>
-                    <li><button onclick="showContact()">CONTACT</button></li>
-                </ul>
+                    </ul>
             </div>
         </nav>
 
@@ -635,10 +543,11 @@
                 </div>
             </div>
         </div>
-        <div class="instagram-container">
-            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+        <div class="social-icons-container"> <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="social-icon-link">
                 <i class="fab fa-instagram"></i>
             </a>
+            <a href="mailto:alessandroiannell98@gmail.com" class="social-icon-link">
+                <i class="fas fa-envelope"></i> </a>
         </div>
     </div>
 
@@ -652,8 +561,7 @@
                 </div>
                 <ul class="nav-links">
                     <li><button onclick="showPortfolio()">WORKS</button></li> <li><button onclick="showAbout()">ABOUT</button></li>
-                    <li><button onclick="showContact()">CONTACT</button></li>
-                </ul>
+                    </ul>
             </div>
         </nav>
         <button class="back-button" onclick="showPortfolio()">← BACK</button>
@@ -670,10 +578,11 @@
             <div class="work-item" onclick="showProjectDetail()">
                 </div>
         </div>
-        <div class="instagram-container">
-            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+        <div class="social-icons-container"> <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="social-icon-link">
                 <i class="fab fa-instagram"></i>
             </a>
+            <a href="mailto:alessandroiannell98@gmail.com" class="social-icon-link">
+                <i class="fas fa-envelope"></i> </a>
         </div>
     </div>
 
@@ -687,8 +596,7 @@
                 </div>
                 <ul class="nav-links">
                     <li><button onclick="showPortfolio()">WORKS</button></li> <li><button onclick="showAbout()">ABOUT</button></li>
-                    <li><button onclick="showContact()">CONTACT</button></li>
-                </ul>
+                    </ul>
             </div>
         </nav>
         <button class="back-button" onclick="showPortfolio()">← BACK</button>
@@ -703,10 +611,11 @@
             <div class="work-item" onclick="showProjectDetail()">
                 </div>
         </div>
-        <div class="instagram-container">
-            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+        <div class="social-icons-container"> <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="social-icon-link">
                 <i class="fab fa-instagram"></i>
             </a>
+            <a href="mailto:alessandroiannell98@gmail.com" class="social-icon-link">
+                <i class="fas fa-envelope"></i> </a>
         </div>
     </div>
 
@@ -720,8 +629,7 @@
                 </div>
                 <ul class="nav-links">
                     <li><button onclick="showPortfolio()">WORKS</button></li> <li><button onclick="showAbout()">ABOUT</button></li>
-                    <li><button onclick="showContact()">CONTACT</button></li>
-                </ul>
+                    </ul>
             </div>
         </nav>
         <button class="back-button" onclick="showPortfolio()">← BACK</button>
@@ -738,10 +646,11 @@
             <div class="work-item" onclick="showProjectDetail()">
                 </div>
         </div>
-        <div class="instagram-container">
-            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+        <div class="social-icons-container"> <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="social-icon-link">
                 <i class="fab fa-instagram"></i>
             </a>
+            <a href="mailto:alessandroiannell98@gmail.com" class="social-icon-link">
+                <i class="fas fa-envelope"></i> </a>
         </div>
     </div>
 
@@ -755,8 +664,7 @@
                 </div>
                 <ul class="nav-links">
                     <li><button onclick="showPortfolio()">WORKS</button></li> <li><button onclick="showAbout()">ABOUT</button></li>
-                    <li><button onclick="showContact()">CONTACT</button></li>
-                </ul>
+                    </ul>
             </div>
         </nav>
         <button class="back-button" onclick="showPortfolio()">← BACK</button>
@@ -773,10 +681,11 @@
             <div class="work-item" onclick="showProjectDetail()">
                 </div>
         </div>
-        <div class="instagram-container">
-            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+        <div class="social-icons-container"> <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="social-icon-link">
                 <i class="fab fa-instagram"></i>
             </a>
+            <a href="mailto:alessandroiannell98@gmail.com" class="social-icon-link">
+                <i class="fas fa-envelope"></i> </a>
         </div>
     </div>
 
@@ -791,8 +700,7 @@
                 <ul class="nav-links">
                     <li><button onclick="showPortfolio()">WORKS</button></li>
                     <li><button onclick="showAbout()">ABOUT</button></li>
-                    <li><button onclick="showContact()">CONTACT</button></li>
-                </ul>
+                    </ul>
             </div>
         </nav>
         <button class="back-button" onclick="showPortfolio()">← BACK</button>
@@ -801,10 +709,11 @@
             <h1>Project Details</h1>
             <p>This is a blank page for your project. You can fill this section with videos, images, and descriptions for each specific project.</p>
             </div>
-        <div class="instagram-container">
-            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+        <div class="social-icons-container"> <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="social-icon-link">
                 <i class="fab fa-instagram"></i>
             </a>
+            <a href="mailto:alessandroiannell98@gmail.com" class="social-icon-link">
+                <i class="fas fa-envelope"></i> </a>
         </div>
     </div>
 
@@ -818,8 +727,7 @@
                 </div>
                 <ul class="nav-links">
                     <li><button onclick="showPortfolio()">WORKS</button></li>
-                    <li><button onclick="showContact()">CONTACT</button></li>
-                </ul>
+                    </ul>
             </div>
         </nav>
         <button class="back-button" onclick="showPortfolio()">← BACK</button>
@@ -843,58 +751,13 @@
                         and explore the darker aspects of human experience through compelling visual narrative.
                     </p>
                 </div>
-                <div class="about-image">
-                    </div>
             </div>
         </div>
-        <div class="instagram-container">
-            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+        <div class="social-icons-container"> <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="social-icon-link">
                 <i class="fab fa-instagram"></i>
             </a>
-        </div>
-    </div>
-
-    <div class="contact-page" id="contactPage">
-        <div class="grain-overlay"></div>
-        <nav class="navigation">
-            <div class="nav-content">
-                <div class="logo" onclick="showHome()">
-                    <div class="logo-name">alessandro iannella</div>
-                    <div class="logo-title">cinematographer</div>
-                </div>
-                <ul class="nav-links">
-                    <li><button onclick="showPortfolio()">WORKS</button></li>
-                    <li><button onclick="showAbout()">ABOUT</button></li>
-                </ul>
-            </div>
-        </nav>
-        <button class="back-button" onclick="showPortfolio()">← BACK</button>
-        
-        <div class="contact-section">
-            <form class="contact-form" onsubmit="handleFormSubmit(event)">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="project">Project Type</label>
-                    <input type="text" id="project" name="project" placeholder="Short Film, Commercial, Music Video...">
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Tell me about your project..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">SEND MESSAGE</button>
-            </form>
-        </div>
-        <div class="instagram-container">
-            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
-                <i class="fab fa-instagram"></i>
-            </a>
+            <a href="mailto:alessandroiannell98@gmail.com" class="social-icon-link">
+                <i class="fas fa-envelope"></i> </a>
         </div>
     </div>
 
@@ -903,8 +766,8 @@
         
         function showPage(pageId) {
             const overlay = document.getElementById('transitionOverlay');
-            // Include the new projectDetailPage in the pages array
-            const pages = ['homePage', 'portfolioPage', 'narrativePage', 'commercialsPage', 'musicvideosPage', 'stillsPage', 'aboutPage', 'contactPage', 'projectDetailPage'];
+            // Removed 'contactPage' from the pages array
+            const pages = ['homePage', 'portfolioPage', 'narrativePage', 'commercialsPage', 'musicvideosPage', 'stillsPage', 'aboutPage', 'projectDetailPage'];
             
             overlay.classList.add('active');
             
@@ -954,12 +817,7 @@
             showPage('aboutPage');
         }
 
-        function showContact() {
-            currentPage = 'contact';
-            showPage('contactPage');
-        }
-
-        // Custom message box instead of alert()
+        // Custom message box instead of alert() - this function is now unused but kept for reference
         function showMessage(message) {
             const messageBox = document.createElement('div');
             messageBox.style.position = 'fixed';
@@ -990,12 +848,6 @@
             }, 3000); // Message disappears after 3 seconds
         }
 
-        function handleFormSubmit(event) {
-            event.preventDefault();
-            showMessage('Thank you for your message! I\'ll get back to you soon.');
-            event.target.reset();
-        }
-
         // Navigation background opacity on scroll
         window.addEventListener('scroll', () => {
             const navigation = document.querySelector('.navigation');
@@ -1024,6 +876,16 @@
             if (parallax && document.getElementById('homePage').style.display !== 'none') {
                 const speed = scrolled * 0.5;
                 parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Set video playback rate
+        window.addEventListener('load', () => {
+            const videoElement = document.getElementById('backgroundVideo');
+            if (videoElement) {
+                // Set playback rate to 0.7 for 70% speed (slower)
+                // You can adjust this value: 1.0 is normal, <1.0 is slower, >1.0 is faster
+                videoElement.playbackRate = 0.7;
             }
         });
     </script>
