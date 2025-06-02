@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alessandro Iannella - Cinematographer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Home Page Styles */
+        .home-page {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .home-page.fade-out {
+            opacity: 0;
+            transform: scale(1.1);
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #2c3e50, #34495e, #1a252f);
+        }
+
+        .video-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+            z-index: 1;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .home-content {
+            text-align: center;
+            z-index: 2;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .name-title {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .name-title:hover .name {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .name {
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Border even less visible */
+            padding: 0.7rem 1.2rem; /* Adjusted padding for smaller height and length */
+            background: rgba(0, 0, 0, 0.1); /* Further decreased opacity */
+            backdrop-filter: blur(40px); /* Significantly increased blur value */
+            border-radius: 0;
+            position: relative;
+            transition: background 0.3s ease;
+            color: #fff;
+            min-width: 180px; /* Further narrowed */
+        }
+
+        /* Portfolio Page Styles */
+        .portfolio-page {
+            display: none;
+            min-height: 100vh;
+            font-family: 'Georgia', serif;
+            background: #0a0a0a;
+            color: #e8e8e8;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            padding-bottom: 80px; /* Space for Instagram icon */
+        }
+
+        .portfolio-page.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><filter id="grain"><feTurbulence baseFrequency="0.9" numOctaves="4" result="noise"/><feColorMatrix in="noise" type="saturate" values="0"/><feBlend in="SourceGraphic" in2="noise" mode="multiply"/></filter></defs><rect width="100%" height="100%" filter="url(%23grain)" opacity="0.05"/></svg>');
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 2rem 4rem;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo-name {
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-transform: lowercase;
+        }
+
+        .logo-title {
+            font-size: 0.8rem;
+            color: #888888;
+            letter-spacing: 1px;
+            text-transform: lowercase;
+            margin-top: 2px;
+        }
+
+        .logo:hover .logo-name {
+            color: #cccccc;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            color: #cccccc;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .nav-links button::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #ffffff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links button:hover {
+            color: #ffffff;
+        }
+
+        .nav-links button:hover::after {
+            width: 100%;
+        }
+
+        .main-portfolio {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 4rem;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .portfolio-item {
+            aspect-ratio: 1;
+            background: #1a1a1a;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.3) 0%, transparent 50%, rgba(0,0,0,0.3) 100%);
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover::before {
+            opacity: 0.7;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .portfolio-item h3 {
+            font-size: 1.5rem;
+            color: #ffffff;
+            letter-spacing: 2px;
+            z-index: 2;
+            position: relative;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        /* Category Page Styles */
+        .category-page {
+            display: none;
+            min-height: 100vh;
+            background: #0a0a0a;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            padding-bottom: 80px; /* Space for Instagram icon */
+        }
+
+        .category-page.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .category-header {
+            padding: 12rem 4rem 4rem;
+            text-align: center;
+        }
+
+        .category-title {
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 2rem;
+            right: 4rem;
+            background: none;
+            border: 1px solid #444444;
+            color: #cccccc;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .back-button:hover {
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            padding: 0 4rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .work-item {
+            aspect-ratio: 16/9;
+            background: #1a1a1a;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            /* Ensure the work-item itself is visible as a black box */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Removed .work-item::before and .work-overlay styles to hide descriptions */
+        .work-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Project Detail Page Styles */
+        .project-detail-page {
+            display: none;
+            min-height: 100vh;
+            background: #000; /* Solid black background */
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            padding-bottom: 80px; /* Space for Instagram icon */
+            position: relative; /* Needed for back button positioning */
+        }
+
+        .project-detail-page.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-content {
+            padding: 12rem 4rem 4rem; /* Adjust padding as needed */
+            max-width: 1400px;
+            margin: 0 auto;
+            color: #fff;
+            text-align: center; /* Center placeholder text */
+        }
+
+        /* About Page Styles */
+        .about-page {
+            display: none;
+            min-height: 100vh;
+            background: #0a0a0a;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            padding-bottom: 80px; /* Space for Instagram icon */
+        }
+
+        .about-page.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-section {
+            padding: 12rem 4rem 8rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #cccccc;
+            text-align: justify; /* Justified text */
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image {
+            aspect-ratio: 4/5;
+            background: #1a1a1a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Contact Page Styles */
+        .contact-page {
+            display: none;
+            min-height: 100vh;
+            background: #0a0a0a;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            padding-bottom: 80px; /* Space for Instagram icon */
+        }
+
+        .contact-page.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-section {
+            padding: 12rem 4rem 8rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #cccccc;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333333;
+            color: #ffffff;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #666666;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: 1px solid #444444;
+            color: #ffffff;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Page transition overlay */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .transition-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Instagram Icon Styles */
+        .instagram-container {
+            position: absolute;
+            bottom: 20px; /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50; /* Ensure it's above other content but below overlay */
+            text-align: center;
+            width: 100%; /* To allow centering with text-align */
+        }
+
+        .instagram-icon-link {
+            display: inline-block; /* Allows centering of the icon itself */
+            color: #ffffff; /* White color for the icon */
+            font-size: 24px; /* Small size for the icon */
+            text-decoration: none; /* No underline */
+            transition: none; /* No transition/hover effect */
+        }
+
+        .instagram-icon-link:hover {
+            color: #ffffff; /* Ensure no color change on hover */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .name {
+                font-size: 0.95rem;
+                padding: 0.6rem 1rem; /* Adjusted for mobile */
+                letter-spacing: 0.18em;
+                min-width: 160px; /* Adjusted for mobile */
+            }
+
+            .navigation {
+                padding: 1rem 2rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .works-grid {
+                grid-template-columns: 1fr;
+                padding: 0 2rem 4rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .back-button {
+                top: 1rem;
+                right: 2rem;
+            }
+
+            .category-header,
+            .about-section,
+            .contact-section {
+                padding: 8rem 2rem 4rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="transition-overlay" id="transitionOverlay"></div>
+
+    <div class="home-page" id="homePage">
+        <div class="video-background">
+            </div>
+        
+        <div class="home-content">
+            <div class="name-title" onclick="showPortfolio()">
+                <div class="name">Alessandro Iannella</div>
+            </div>
+        </div>
+        </div>
+
+    <div class="portfolio-page" id="portfolioPage">
+        <div class="grain-overlay"></div>
+
+        <nav class="navigation">
+            <div class="nav-content">
+                <div class="logo" onclick="showHome()">
+                    <div class="logo-name">alessandro iannella</div>
+                    <div class="logo-title">cinematographer</div>
+                </div>
+                <ul class="nav-links">
+                    <li><button onclick="showAbout()">ABOUT</button></li>
+                    <li><button onclick="showContact()">CONTACT</button></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="main-portfolio">
+            <div class="portfolio-grid">
+                <div class="portfolio-item" onclick="showCategory('narrative')">
+                    <h3>Narrative</h3>
+                </div>
+                <div class="portfolio-item" onclick="showCategory('commercials')">
+                    <h3>Commercials</h3>
+                </div>
+                <div class="portfolio-item" onclick="showCategory('musicvideos')">
+                    <h3>Music Videos</h3>
+                </div>
+                <div class="portfolio-item" onclick="showCategory('stills')">
+                    <h3>Stills</h3>
+                </div>
+            </div>
+        </div>
+        <div class="instagram-container">
+            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="category-page" id="narrativePage">
+        <div class="grain-overlay"></div>
+        <nav class="navigation">
+            <div class="nav-content">
+                <div class="logo" onclick="showHome()">
+                    <div class="logo-name">alessandro iannella</div>
+                    <div class="logo-title">cinematographer</div>
+                </div>
+                <ul class="nav-links">
+                    <li><button onclick="showPortfolio()">WORKS</button></li> <li><button onclick="showAbout()">ABOUT</button></li>
+                    <li><button onclick="showContact()">CONTACT</button></li>
+                </ul>
+            </div>
+        </nav>
+        <button class="back-button" onclick="showPortfolio()">← BACK</button>
+        
+        <div class="category-header">
+            <h1 class="category-title">Narrative</h1>
+        </div>
+        
+        <div class="works-grid">
+            <div class="work-item" onclick="showProjectDetail()">
+                </div>
+            <div class="work-item" onclick="showProjectDetail()">
+                </div>
+            <div class="work-item" onclick="showProjectDetail()">
+                </div>
+        </div>
+        <div class="instagram-container">
+            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="category-page" id="commercialsPage">
+        <div class="grain-overlay"></div>
+        <nav class="navigation">
+            <div class="nav-content">
+                <div class="logo" onclick="showHome()">
+                    <div class="logo-name">alessandro iannella</div>
+                    <div class="logo-title">cinematographer</div>
+                </div>
+                <ul class="nav-links">
+                    <li><button onclick="showPortfolio()">WORKS</button></li> <li><button onclick="showAbout()">ABOUT</button></li>
+                    <li><button onclick="showContact()">CONTACT</button></li>
+                </ul>
+            </div>
+        </nav>
+        <button class="back-button" onclick="showPortfolio()">← BACK</button>
+        
+        <div class="category-header">
+            <h1 class="category-title">Commercials</h1>
+        </div>
+        
+        <div class="works-grid">
+            <div class="work-item" onclick="showProjectDetail()">
+                </div>
+            <div class="work-item" onclick="showProjectDetail()">
+                </div>
+        </div>
+        <div class="instagram-container">
+            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="category-page" id="musicvideosPage">
+        <div class="grain-overlay"></div>
+        <nav class="navigation">
+            <div class="nav-content">
+                <div class="logo" onclick="showHome()">
+                    <div class="logo-name">alessandro iannella</div>
+                    <div class="logo-title">cinematographer</div>
+                </div>
+                <ul class="nav-links">
+                    <li><button onclick="showPortfolio()">WORKS</button></li> <li><button onclick="showAbout()">ABOUT</button></li>
+                    <li><button onclick="showContact()">CONTACT</button></li>
+                </ul>
+            </div>
+        </nav>
+        <button class="back-button" onclick="showPortfolio()">← BACK</button>
+        
+        <div class="category-header">
+            <h1 class="category-title">Music Videos</h1>
+        </div>
+        
+        <div class="works-grid">
+            <div class="work-item" onclick="showProjectDetail()">
+                </div>
+            <div class="work-item" onclick="showProjectDetail()">
+                </div>
+            <div class="work-item" onclick="showProjectDetail()">
+                </div>
+        </div>
+        <div class="instagram-container">
+            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="category-page" id="stillsPage">
+        <div class="grain-overlay"></div>
+        <nav class="navigation">
+            <div class="nav-content">
+                <div class="logo" onclick="showHome()">
+                    <div class="logo-name">alessandro iannella</div>
+                    <div class="logo-title">cinematographer</div>
+                </div>
+                <ul class="nav-links">
+                    <li><button onclick="showPortfolio()">WORKS</button></li> <li><button onclick="showAbout()">ABOUT</button></li>
+                    <li><button onclick="showContact()">CONTACT</button></li>
+                </ul>
+            </div>
+        </nav>
+        <button class="back-button" onclick="showPortfolio()">← BACK</button>
+        
+        <div class="category-header">
+            <h1 class="category-title">Stills</h1>
+        </div>
+        
+        <div class="works-grid">
+            <div class="work-item" onclick="showProjectDetail()">
+                </div>
+            <div class="work-item" onclick="showProjectDetail()">
+                </div>
+            <div class="work-item" onclick="showProjectDetail()">
+                </div>
+        </div>
+        <div class="instagram-container">
+            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="project-detail-page" id="projectDetailPage">
+        <div class="grain-overlay"></div>
+        <nav class="navigation">
+            <div class="nav-content">
+                <div class="logo" onclick="showHome()">
+                    <div class="logo-name">alessandro iannella</div>
+                    <div class="logo-title">cinematographer</div>
+                </div>
+                <ul class="nav-links">
+                    <li><button onclick="showPortfolio()">WORKS</button></li>
+                    <li><button onclick="showAbout()">ABOUT</button></li>
+                    <li><button onclick="showContact()">CONTACT</button></li>
+                </ul>
+            </div>
+        </nav>
+        <button class="back-button" onclick="showPortfolio()">← BACK</button>
+        
+        <div class="project-content">
+            <h1>Project Details</h1>
+            <p>This is a blank page for your project. You can fill this section with videos, images, and descriptions for each specific project.</p>
+            </div>
+        <div class="instagram-container">
+            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="about-page" id="aboutPage">
+        <div class="grain-overlay"></div>
+        <nav class="navigation">
+            <div class="nav-content">
+                <div class="logo" onclick="showHome()">
+                    <div class="logo-name">alessandro iannella</div>
+                    <div class="logo-title">cinematographer</div>
+                </div>
+                <ul class="nav-links">
+                    <li><button onclick="showPortfolio()">WORKS</button></li>
+                    <li><button onclick="showContact()">CONTACT</button></li>
+                </ul>
+            </div>
+        </nav>
+        <button class="back-button" onclick="showPortfolio()">← BACK</button>
+        
+        <div class="about-section">
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        As an independent cinematographer, I specialize in the delicate art of psychological horror 
+                        visual storytelling. My work explores the liminal spaces between reality and nightmare, 
+                        using light, shadow, and composition to create visceral emotional experiences.
+                    </p>
+                    <p>
+                        With a deep understanding of how visual language affects the subconscious mind, I craft 
+                        each frame to build tension, unease, and psychological depth. Whether working on intimate 
+                        short films, bold commercials, or atmospheric music videos, my approach remains rooted 
+                        in the belief that true horror comes from within.
+                    </p>
+                    <p>
+                        Happy to collaborate with directors, producers, and artists who aren't afraid to push boundaries 
+                        and explore the darker aspects of human experience through compelling visual narrative.
+                    </p>
+                </div>
+                <div class="about-image">
+                    </div>
+            </div>
+        </div>
+        <div class="instagram-container">
+            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="contact-page" id="contactPage">
+        <div class="grain-overlay"></div>
+        <nav class="navigation">
+            <div class="nav-content">
+                <div class="logo" onclick="showHome()">
+                    <div class="logo-name">alessandro iannella</div>
+                    <div class="logo-title">cinematographer</div>
+                </div>
+                <ul class="nav-links">
+                    <li><button onclick="showPortfolio()">WORKS</button></li>
+                    <li><button onclick="showAbout()">ABOUT</button></li>
+                </ul>
+            </div>
+        </nav>
+        <button class="back-button" onclick="showPortfolio()">← BACK</button>
+        
+        <div class="contact-section">
+            <form class="contact-form" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="project">Project Type</label>
+                    <input type="text" id="project" name="project" placeholder="Short Film, Commercial, Music Video...">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Tell me about your project..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">SEND MESSAGE</button>
+            </form>
+        </div>
+        <div class="instagram-container">
+            <a href="https://www.instagram.com/aalexiannella/" target="_blank" class="instagram-icon-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 'home';
+        
+        function showPage(pageId) {
+            const overlay = document.getElementById('transitionOverlay');
+            // Include the new projectDetailPage in the pages array
+            const pages = ['homePage', 'portfolioPage', 'narrativePage', 'commercialsPage', 'musicvideosPage', 'stillsPage', 'aboutPage', 'contactPage', 'projectDetailPage'];
+            
+            overlay.classList.add('active');
+            
+            setTimeout(() => {
+                pages.forEach(page => {
+                    const element = document.getElementById(page);
+                    if (page === pageId) {
+                        element.style.display = page === 'homePage' ? 'flex' : 'block';
+                        setTimeout(() => {
+                            if (page !== 'homePage') element.classList.add('fade-in');
+                        }, 50);
+                    } else {
+                        element.style.display = 'none';
+                        element.classList.remove('fade-in');
+                    }
+                });
+                
+                setTimeout(() => {
+                    overlay.classList.remove('active');
+                }, 400); // Increased delay to match transition duration
+            }, 400); // Increased delay to match transition duration
+        }
+
+        function showPortfolio() {
+            currentPage = 'portfolio';
+            showPage('portfolioPage');
+        }
+
+        function showHome() {
+            currentPage = 'home';
+            showPage('homePage');
+        }
+
+        function showCategory(category) {
+            currentPage = category;
+            showPage(category + 'Page');
+        }
+
+        // New function to show the blank project detail page
+        function showProjectDetail() {
+            currentPage = 'projectDetail';
+            showPage('projectDetailPage');
+        }
+
+        function showAbout() {
+            currentPage = 'about';
+            showPage('aboutPage');
+        }
+
+        function showContact() {
+            currentPage = 'contact';
+            showPage('contactPage');
+        }
+
+        // Custom message box instead of alert()
+        function showMessage(message) {
+            const messageBox = document.createElement('div');
+            messageBox.style.position = 'fixed';
+            messageBox.style.top = '50%';
+            messageBox.style.left = '50%';
+            messageBox.style.transform = 'translate(-50%, -50%)';
+            messageBox.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+            messageBox.style.color = '#fff';
+            messageBox.style.padding = '20px';
+            messageBox.style.borderRadius = '5px';
+            messageBox.style.zIndex = '10000';
+            messageBox.style.textAlign = 'center';
+            messageBox.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.5)';
+            messageBox.style.opacity = '0';
+            messageBox.style.transition = 'opacity 0.3s ease-in-out';
+            messageBox.innerText = message;
+            document.body.appendChild(messageBox);
+
+            setTimeout(() => {
+                messageBox.style.opacity = '1';
+            }, 10); // Small delay to trigger transition
+
+            setTimeout(() => {
+                messageBox.style.opacity = '0';
+                messageBox.addEventListener('transitionend', () => {
+                    messageBox.remove();
+                });
+            }, 3000); // Message disappears after 3 seconds
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            showMessage('Thank you for your message! I\'ll get back to you soon.');
+            event.target.reset();
+        }
+
+        // Navigation background opacity on scroll
+        window.addEventListener('scroll', () => {
+            const navigation = document.querySelector('.navigation');
+            if (navigation) { // Ensure navigation exists on the current page
+                if (window.scrollY > 100) {
+                    navigation.style.background = 'rgba(10, 10, 10, 0.95)';
+                } else {
+                    navigation.style.background = 'rgba(10, 10, 10, 0.9)';
+                }
+            }
+        });
+
+        // Handle video background fallback
+        const video = document.querySelector('.video-background video');
+        if (video) {
+            video.addEventListener('error', () => {
+                const videoContainer = document.querySelector('.video-background');
+                videoContainer.style.background = 'linear-gradient(135deg, #8B0000, #000000)';
+            });
+        }
+
+        // Add smooth scrolling and parallax effects for home page
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.video-background');
+            if (parallax && document.getElementById('homePage').style.display !== 'none') {
+                const speed = scrolled * 0.5;
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
